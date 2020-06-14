@@ -1,6 +1,6 @@
 # orderandchaos-react-range-slider
 
-> Linear and logarithmic range sliders for React
+Linear and logarithmic range sliders for React
 
 [![NPM](https://img.shields.io/npm/v/@orderandchaos/react-range-slider.svg)](https://www.npmjs.com/package/@orderandchaos/react-range-slider)
 ## Install
