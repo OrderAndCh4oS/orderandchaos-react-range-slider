@@ -22,6 +22,7 @@
 
 .rangeSlider:focus {
   outline: none;
+  border: none;
 }
 
 .rangeSlider::-webkit-slider-runnable-track {

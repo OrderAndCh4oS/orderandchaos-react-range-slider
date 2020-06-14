@@ -33,6 +33,10 @@ const App = () => {
 export default App
 ```
 
+## Demo 
+
+https://sarcoma.github.io/orderandchaos-react-range-slider/
+
 ## License
 
 MIT © [sarcoma](https://github.com/sarcoma)
