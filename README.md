@@ -6,7 +6,7 @@ Linear and logarithmic range sliders for React
 ## Install
 
 ```bash
-npm install --save orderandchaos-react-range-slider
+npm install @orderandchaos/react-range-slider
 ```
 
 ## Usage
@@ -14,8 +14,8 @@ npm install --save orderandchaos-react-range-slider
 ```tsx
 import React, { useState } from 'react'
 
-import { RangeSlider, RangeSliderTypes } from 'orderandchaos-react-range-slider'
-import 'orderandchaos-react-range-slider/dist/index.css'
+import { RangeSlider, RangeSliderTypes } from '@orderandchaos/react-range-slider'
+import '@orderandchaos/react-range-slider/dist/index.css'
 
 const App = () => {
   const [linearValue, setLinearValue] = useState<number>(0)
