@@ -120,7 +120,7 @@ export const RangeSlider: FC<Props> = (
     normalisedValue = Math.min(1, normalisedValue);
     const left = (normalisedValue * (containerRef.current.clientWidth - 8)) + 4
     setLeft(left);
-  }, [value, containerRef]);
+  }, [value, min, max, containerRef]);
   return (
     <div className={styles.rangeSlider_wrapper} ref={containerRef}>
       {showTabTop && <span
