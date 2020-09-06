@@ -1,6 +1,6 @@
 {
   "name": "@orderandchaos/react-range-slider",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "Linear and logarithmic range sliders for React",
   "author": "sarcoma",
   "license": "MIT",

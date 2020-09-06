@@ -115,16 +115,18 @@ export const RangeSlider: FC<Props> = (
   useEffect(() => {
     if(!showTabTop && !showTabBottom) return;
     if(!containerRef || containerRef.current === null) return;
-    const normalisedValue = (getValue(type, value, max, min) - getMin(type, min)) / (getMax(type, max) - getMin(type, min));
-    console.log('norm', normalisedValue);
-    setLeft((normalisedValue * (containerRef.current.clientWidth - 8)) + 4)
+    let normalisedValue = (getValue(type, value, max, min) - getMin(type, min)) / (getMax(type, max) - getMin(type, min));
+    normalisedValue = Math.max(0, normalisedValue);
+    normalisedValue = Math.min(1, normalisedValue);
+    const left = (normalisedValue * (containerRef.current.clientWidth - 8)) + 4
+    setLeft(left);
   }, [value, containerRef]);
   return (
     <div className={styles.rangeSlider_wrapper} ref={containerRef}>
       {showTabTop && <span
         className={[styles.rangeSlider_tab, styles.rangeSlider_tabTop].join(' ')}
         style={{left: `${left}px`}}
-      >{value}</span>}
+      >{value.toFixed(decimalPlaces)}</span>}
       <input
         type="range"
         className={styles.rangeSlider}
@@ -139,7 +141,7 @@ export const RangeSlider: FC<Props> = (
       {showTabBottom && <span
         className={styles.rangeSlider_tab}
         style={{left: `${left}px`}}
-      >{value}</span>}
+      >{value.toFixed(decimalPlaces)}</span>}
     </div>
   )
 }
