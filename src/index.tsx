@@ -115,7 +115,9 @@ export const RangeSlider: FC<Props> = (
   useEffect(() => {
     if(!showTabTop && !showTabBottom) return;
     if(!containerRef || containerRef.current === null) return;
-    setLeft(((getValue(type, value, max, min) / getMax(type, max)) * (containerRef.current.clientWidth - 8)) + 4)
+    const normalisedValue = (getValue(type, value, max, min) - getMin(type, min)) / (getMax(type, max) - getMin(type, min));
+    console.log('norm', normalisedValue);
+    setLeft((normalisedValue * (containerRef.current.clientWidth - 8)) + 4)
   }, [value, containerRef]);
   return (
     <div className={styles.rangeSlider_wrapper} ref={containerRef}>
