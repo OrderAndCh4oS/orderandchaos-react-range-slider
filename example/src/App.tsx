@@ -12,7 +12,7 @@ const App = () => {
       <Row>
         <Column columnClass={styles.col6}>
           <input readOnly={true} value={linearValue}/>
-          <RangeSlider value={linearValue} setValue={setLinearValue} min={0} max={100} step={1}/>
+          <RangeSlider value={linearValue} setValue={setLinearValue} min={0} max={100} step={0.1}/>
         </Column>
         <Column columnClass={styles.col6}>
           <input readOnly={true} value={logValue}/>

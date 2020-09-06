@@ -128,6 +128,7 @@ export const RangeSlider: FC<Props> = (
         value={getValue(type, value, max, min).toFixed(decimalPlaces)}
         min={getMin(type, min)}
         max={getMax(type, max)}
+        step={step}
         {...rest}
       />
     </div>
