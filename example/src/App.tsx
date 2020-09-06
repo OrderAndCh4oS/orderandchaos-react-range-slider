@@ -12,11 +12,11 @@ const App = () => {
       <Row>
         <Column columnClass={styles.col6}>
           <input readOnly={true} value={linearValue}/>
-          <RangeSlider value={linearValue} setValue={setLinearValue} min={0} max={100} step={0.1}/>
+          <RangeSlider value={linearValue} setValue={setLinearValue} min={0} max={100} step={0.1} showTabBottom={true}/>
         </Column>
         <Column columnClass={styles.col6}>
           <input readOnly={true} value={logValue}/>
-          <RangeSlider value={logValue} setValue={setLogValue} type={RangeSliderTypes.LOG} min={100} max={100000} decimalPlaces={0}/>
+          <RangeSlider value={logValue} setValue={setLogValue} type={RangeSliderTypes.LOG} min={100} max={100000} decimalPlaces={0} showTabBottom={true}/>
         </Column>
       </Row>
     </ContainerFullWidth>

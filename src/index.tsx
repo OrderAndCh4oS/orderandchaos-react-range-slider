@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { ChangeEvent, FC, FocusEvent } from 'react'
+import { ChangeEvent, FC, FocusEvent, useEffect, useRef, useState } from 'react'
 import styles from './styles.module.css'
 
 export const logScale = (value: number, max: number, min: number = 1): number => {
@@ -14,8 +14,6 @@ export const logScale = (value: number, max: number, min: number = 1): number =>
   const scale = (maxV - minV) / (maxP - minP)
 
   const result = Math.exp(minV + scale * (value - minP))
-  console.log('log', value, max, min, minV, maxV, scale)
-  console.log('log', result)
   return result
 }
 
@@ -30,8 +28,6 @@ export const inverseLogScale = (lg: number, max: number, min: number = 1): numbe
 
   const scale = (maxV - minV) / (maxP - minP)
   const result = (Math.log(lg) - minV) / scale + minP
-  console.log('inverse', lg, max, min, minV, maxV, scale)
-  console.log('inverse', result)
   return result
 }
 
@@ -78,38 +74,35 @@ interface Props {
   max?: number,
   value?: number,
   type?: RangeSliderTypes,
-  showTab?: boolean,
+  showTabTop?: boolean,
+  showTabBottom?: boolean,
   decimalPlaces?: number
   setValue: (value: number) => void,
 }
 
-const handleChange = (type: RangeSliderTypes, setValue: (value: number) => void, decimalPlaces: number, max: number, min: number) => (e: ChangeEvent<HTMLInputElement>) => {
+const getActualValue = (value: string | number, type: RangeSliderTypes, max: number, min: number, decimalPlaces: number) => {
   switch (type) {
     case RangeSliderTypes.LINEAR:
-      setValue(toDecimalPlaces(Number(e.target.value), decimalPlaces))
-      break
+      return toDecimalPlaces(Number(value), decimalPlaces)
     case RangeSliderTypes.LOG:
-      setValue(toDecimalPlaces(logScale(Number(e.target.value), max, min), decimalPlaces))
-      break
+      return toDecimalPlaces(logScale(Number(value), max, min), decimalPlaces)
   }
 }
 
+const handleChange = (type: RangeSliderTypes, setValue: (value: number) => void, decimalPlaces: number, max: number, min: number) => (e: ChangeEvent<HTMLInputElement>) => {
+  setValue(getActualValue(e.target.value, type, max, min, decimalPlaces));
+}
+
 const handleBlur = (type: RangeSliderTypes, setValue: (value: number) => void, max: number, min: number, decimalPlaces: number) => (e: FocusEvent<HTMLInputElement>) => {
-  switch (type) {
-    case RangeSliderTypes.LINEAR:
-      setValue(Number(e.target.value))
-      break
-    case RangeSliderTypes.LOG:
-      setValue(toDecimalPlaces(logScale(Number(e.target.value), max, min), decimalPlaces))
-      break
-  }
+  setValue(getActualValue(e.target.value, type, max, min, decimalPlaces));
 }
 
 export const RangeSlider: FC<Props> = (
   {
     setValue,
     type = RangeSliderTypes.LINEAR,
-    showTab = true,
+    showTabTop = false,
+    showTabBottom = false,
     step = 1,
     min = 0,
     max = 100,
@@ -117,9 +110,19 @@ export const RangeSlider: FC<Props> = (
     decimalPlaces = 3,
     ...rest
   }) => {
+  const [left, setLeft] = useState<number | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    if(!showTabTop && !showTabBottom) return;
+    if(!containerRef || containerRef.current === null) return;
+    setLeft(((getValue(type, value, max, min) / getMax(type, max)) * (containerRef.current.clientWidth - 8)) + 4)
+  }, [value, containerRef]);
   return (
-    <div className={styles.rangeSlider_wrapper}>
-      {showTab && <span className={styles.rangeSlider_tab}/>}
+    <div className={styles.rangeSlider_wrapper} ref={containerRef}>
+      {showTabTop && <span
+        className={[styles.rangeSlider_tab, styles.rangeSlider_tabTop].join(' ')}
+        style={{left: `${left}px`}}
+      >{value}</span>}
       <input
         type="range"
         className={styles.rangeSlider}
@@ -131,6 +134,10 @@ export const RangeSlider: FC<Props> = (
         step={step}
         {...rest}
       />
+      {showTabBottom && <span
+        className={styles.rangeSlider_tab}
+        style={{left: `${left}px`}}
+      >{value}</span>}
     </div>
   )
 }

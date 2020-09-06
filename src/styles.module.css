@@ -1,6 +1,7 @@
 
 .rangeSlider_wrapper {
   display: block;
+  position: relative;
 }
 
 .rangeSlider_tab {
@@ -8,6 +9,10 @@
   transform: translateX(-50%);
   font-size: 11px;
   display: block;
+}
+
+.rangeSlider_tabTop {
+  top: -24px;
 }
 
 .rangeSlider {
